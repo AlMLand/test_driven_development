@@ -149,14 +149,14 @@ public class TestListImpl {
 		List<Object> list = new ListImpl<>();
 		assertFalse(list.remove(null));
 	}
-	
+
 	@Test
 	public void shouldReturnFalseWhenElementNotFound() {
 		List<Integer> list = new ListImpl<>();
 		list.add(1);
 		assertFalse(list.remove(Integer.valueOf("2")));
 	}
-	
+
 	@Test
 	public void shouldReturnTrueWhenElementSuccessfullyRemoved() {
 		List<Integer> list = new ListImpl<>();
@@ -195,7 +195,7 @@ public class TestListImpl {
 		list.remove(Integer.valueOf("3"));
 		assertEquals(2, list.size());
 	}
-	
+
 	// get()
 	@Test
 	public void shouldReturnSameValue() {
@@ -212,5 +212,66 @@ public class TestListImpl {
 		list.add(testObject);
 		list.get(1);
 	}
-	
+
+	// removeAll()
+	@SuppressWarnings("unlikely-arg-type")
+	@Test(expected = ClassCastException.class)
+	public void shouldReturnClassCastExceptionWhenElementsOfInputCollectionAreNotIncopatibel() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		List<String> input = new ListImpl<>();
+		input.add("a");
+		source.removeAll(input);
+	}
+
+	@Test
+	public void shouldReturnFalseWhenInputCollectionIsEmpty() {
+		List<Object> source = new ListImpl<>();
+		source.add(null);
+		List<Object> input = new ListImpl<>();
+		assertFalse(source.removeAll(input));
+	}
+
+	@Test
+	public void shouldReturnFalseWhenSoourceCollectionIsEmpty() {
+		List<Object> source = new ListImpl<>();
+		List<Object> input = new ListImpl<>();
+		input.add(null);
+		assertFalse(source.removeAll(input));
+	}
+
+	@Test
+	public void shouldReturnTrueWhenTwoElementsRemovedFromSourceList() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		source.add(2);
+		source.add(3);
+		List<Integer> input = new ListImpl<>();
+		input.add(1);
+		input.add(3);
+		source.removeAll(input);
+		assertEquals(1, source.size());
+	}
+
+	@Test
+	public void shouldReturnFalseWhenInputElementsNotFoundInSourceList() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		source.add(2);
+		List<Integer> input = new ListImpl<>();
+		input.add(3);
+		assertFalse(source.removeAll(input));
+	}
+
+	@Test
+	public void shouldReturnTrueWhenNoElementsRemoved() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		source.add(2);
+		List<Integer> input = new ListImpl<>();
+		input.add(3);
+		source.removeAll(input);
+		assertEquals(2, source.size());
+	}
+
 }

@@ -71,7 +71,7 @@ public class ListImpl<E> implements List<E> {
 		}
 		return false;
 	}
-	
+
 	private boolean searchForMatchesInArray(Object o) {
 		for (Object object : internalArray) {
 			if (object == o)
@@ -81,7 +81,6 @@ public class ListImpl<E> implements List<E> {
 	}
 
 	public boolean containsAll(Collection<?> c) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -96,7 +95,24 @@ public class ListImpl<E> implements List<E> {
 	}
 
 	public boolean removeAll(Collection<?> c) {
-		// TODO Auto-generated method stub
+		Object inputElement = null;
+		Object internalElement = null;
+		if (internalArray.length != 0 && !c.isEmpty()) {
+			inputElement = c.stream().filter(element -> element != null).findAny().get();
+			internalElement = List.of(internalArray).stream().filter(element -> element != null).findAny().get();
+			if (inputElement.getClass() != internalElement.getClass()) {
+				throw new ClassCastException();
+			}
+			boolean foundElement = false;
+			for (Object object : c.toArray()) {
+				var targetElement = searchForMatchesInArray(object);
+				if (targetElement) {
+					remove(object);
+					foundElement = true;
+				}
+			}
+			return foundElement ? true : false;
+		}
 		return false;
 	}
 
