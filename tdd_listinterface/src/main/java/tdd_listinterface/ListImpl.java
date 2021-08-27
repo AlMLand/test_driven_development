@@ -105,10 +105,9 @@ public class ListImpl<E> implements List<E> {
 			}
 			boolean foundElement = false;
 			for (Object object : c.toArray()) {
-				var targetElement = searchForMatchesInArray(object);
+				boolean targetElement = searchForMatchesInArray(object);
 				if (targetElement) {
-					remove(object);
-					foundElement = true;
+					foundElement = remove(object);
 				}
 			}
 			return foundElement ? true : false;
