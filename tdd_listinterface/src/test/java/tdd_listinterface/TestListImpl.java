@@ -212,11 +212,42 @@ public class TestListImpl {
 		list.add(testObject);
 		list.get(1);
 	}
+	
+	// containsAll()
+	@Test
+	public void shouldReturnTrueWhenAllElementsArePresent() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		source.add(2);
+		source.add(3);
+		List<Integer> input = new ListImpl<>();
+		input.add(1);
+		input.add(3);
+		assertTrue(source.containsAll(input));
+	}
+	
+	@Test
+	public void shouldReturnFalseWhenInputCollectionHasNoElements() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		List<Integer> input = new ListImpl<>();
+		assertFalse(source.containsAll(input));
+	}
 
+	@SuppressWarnings("unlikely-arg-type")
+	@Test(expected = ClassCastException.class)
+	public void shouldReturnClassCastExceptionWhenElementsOfInputCollectionAreNotIncopatibelByCallContainsAll() {
+		List<Integer> source = new ListImpl<>();
+		source.add(1);
+		List<String> input = new ListImpl<>();
+		input.add("a");
+		source.containsAll(input);
+	}
+	
 	// removeAll()
 	@SuppressWarnings("unlikely-arg-type")
 	@Test(expected = ClassCastException.class)
-	public void shouldReturnClassCastExceptionWhenElementsOfInputCollectionAreNotIncopatibel() {
+	public void shouldReturnClassCastExceptionWhenElementsOfInputCollectionAreNotIncopatibelByCallRemoveAll() {
 		List<Integer> source = new ListImpl<>();
 		source.add(1);
 		List<String> input = new ListImpl<>();
@@ -241,7 +272,7 @@ public class TestListImpl {
 	}
 
 	@Test
-	public void shouldReturnTrueWhenTwoElementsRemovedFromSourceList() {
+	public void shouldReturnTrueWhenTwoElementsRemovedFromSourceCollection() {
 		List<Integer> source = new ListImpl<>();
 		source.add(1);
 		source.add(2);
@@ -250,11 +281,11 @@ public class TestListImpl {
 		input.add(1);
 		input.add(3);
 		source.removeAll(input);
-		assertEquals(1, source.size());
+		assertEquals(1, source.size());	
 	}
 
 	@Test
-	public void shouldReturnFalseWhenInputElementsNotFoundInSourceList() {
+	public void shouldReturnFalseWhenInputElementsNotFoundInSourceCollection() {
 		List<Integer> source = new ListImpl<>();
 		source.add(1);
 		source.add(2);
