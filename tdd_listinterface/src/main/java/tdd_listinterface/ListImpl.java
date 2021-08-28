@@ -81,6 +81,22 @@ public class ListImpl<E> implements List<E> {
 	}
 
 	public boolean containsAll(Collection<?> c) {
+		if (!c.isEmpty()) {
+			if(!typeMatcher(c)) {
+				throw new ClassCastException();
+			}
+			boolean foundElement = false;
+			int count = 0;
+			for (Object object : c.toArray()) {
+				foundElement = searchForMatchesInArray(object);
+				if (foundElement) {
+					count++;
+				}
+			}
+			if (count == c.size()) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -95,12 +111,8 @@ public class ListImpl<E> implements List<E> {
 	}
 
 	public boolean removeAll(Collection<?> c) {
-		Object inputElement = null;
-		Object internalElement = null;
 		if (internalArray.length != 0 && !c.isEmpty()) {
-			inputElement = c.stream().filter(element -> element != null).findAny().get();
-			internalElement = List.of(internalArray).stream().filter(element -> element != null).findAny().get();
-			if (inputElement.getClass() != internalElement.getClass()) {
+			if (!typeMatcher(c)) {
 				throw new ClassCastException();
 			}
 			boolean foundElement = false;
@@ -113,6 +125,12 @@ public class ListImpl<E> implements List<E> {
 			return foundElement ? true : false;
 		}
 		return false;
+	}
+
+	private boolean typeMatcher(Collection<?> c) {
+		Object inputElement = c.stream().filter(element -> element != null).findAny().get();
+		Object internalElement = List.of(internalArray).stream().filter(element -> element != null).findAny().get();
+		return inputElement.getClass() == internalElement.getClass();
 	}
 
 	public boolean retainAll(Collection<?> c) {
