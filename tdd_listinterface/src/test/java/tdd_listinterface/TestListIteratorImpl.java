@@ -53,5 +53,21 @@ public class TestListIteratorImpl {
 		assertTrue(listIterator.hasNext());
 		assertEquals(Integer.valueOf(3), listIterator.next());
 	}
+	
+	// hasPrevios()
+	@Test
+	public void shouldReturnFalseWhenNoPreviosElementExists() {
+		Object[] objects = {1};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		assertFalse(listIterator.hasPrevious());
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenPreviosElementExist() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		assertTrue(listIterator.hasPrevious());
+	}
 
 }
