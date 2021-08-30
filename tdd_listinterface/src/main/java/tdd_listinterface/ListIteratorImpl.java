@@ -28,8 +28,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public boolean hasPrevious() {
-		// TODO Auto-generated method stub
-		return false;
+		return internal.length == 0 || elementIndex == internal.length || elementIndex == 0 ? false : true;
 	}
 
 	@Override
