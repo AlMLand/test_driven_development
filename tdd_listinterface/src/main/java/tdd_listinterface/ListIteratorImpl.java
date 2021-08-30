@@ -28,7 +28,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public boolean hasPrevious() {
-		return internal.length == 0 || elementIndex == internal.length || elementIndex == 0 ? false : true;
+		return internal.length != 0 && elementIndex != internal.length && elementIndex != 0 ? true : false;
 	}
 
 	@Override
