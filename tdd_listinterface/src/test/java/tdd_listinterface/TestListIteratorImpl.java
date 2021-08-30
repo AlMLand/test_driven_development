@@ -56,18 +56,42 @@ public class TestListIteratorImpl {
 	
 	// hasPrevios()
 	@Test
-	public void shouldReturnFalseWhenNoPreviosElementExists() {
+	public void shouldReturnFalseWhenNoPreviousElementExists() {
 		Object[] objects = {1};
 		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
 		assertFalse(listIterator.hasPrevious());
 	}
 	
 	@Test
-	public void shouldReturnTrueWhenPreviosElementExist() {
+	public void shouldReturnTrueWhenPreviousElementExist() {
 		Object[] objects = {1, 2};
 		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
 		listIterator.next();
 		assertTrue(listIterator.hasPrevious());
+	}
+	
+	// previous()
+	@Test(expected = NoSuchElementException.class)
+	public void shouldReturnNoSuchElementExceptionWhenNoPreviousElementExist() {
+		Object[] objects = {};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.previous();
+	}
+	
+	@Test
+	public void shouldReturnExpectedElementWhenPreviousElementExist() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		assertEquals(Integer.valueOf(1), listIterator.previous());
+	}
+	
+	// next() and previous()
+	@Test
+	public void shouldReturnTrueWhenFirstCallIsMethodNextAndSecondCallIsMethodPrevious() {
+		Object[] objects = {98, 99};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		assertEquals(listIterator.next(), listIterator.previous());
 	}
 
 }
