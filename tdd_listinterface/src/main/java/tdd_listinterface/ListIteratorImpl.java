@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 public class ListIteratorImpl<E> implements ListIterator<E> {
 	private Object[] internal;
-	private int elementIndex;
+	private int cursorPosition;
 
 	public ListIteratorImpl(Object[] internal) {
 		super();
@@ -14,21 +14,21 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public boolean hasNext() {
-		return internal.length != 0 && internal.length != elementIndex ? true : false;
+		return internal.length != 0 && internal.length != cursorPosition ? true : false;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public E next() {
-		if(internal.length == 0 || internal.length == elementIndex) {
+		if(internal.length == 0 || internal.length == cursorPosition) {
 			throw new NoSuchElementException();
 		}
-		return (E) internal[elementIndex++];
+		return (E) internal[cursorPosition++];
 	}
 
 	@Override
 	public boolean hasPrevious() {
-		return internal.length != 0 && elementIndex != internal.length && elementIndex != 0 ? true : false;
+		return internal.length != 0 && cursorPosition != internal.length && cursorPosition != 0 ? true : false;
 	}
 
 	@Override
