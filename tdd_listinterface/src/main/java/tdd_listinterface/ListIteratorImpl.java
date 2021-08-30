@@ -31,10 +31,13 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		return internal.length != 0 && cursorPosition != internal.length && cursorPosition != 0 ? true : false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public E previous() {
-		// TODO Auto-generated method stub
-		return null;
+		if(internal.length == 0 || cursorPosition == 0) {
+			throw new NoSuchElementException();
+		}
+		return (E) internal[--cursorPosition];
 	}
 
 	@Override
