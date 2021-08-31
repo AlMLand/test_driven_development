@@ -42,8 +42,10 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public int nextIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		if(cursorPosition == internal.length) {
+			return internal.length;
+		}
+		return cursorPosition;
 	}
 
 	@Override
