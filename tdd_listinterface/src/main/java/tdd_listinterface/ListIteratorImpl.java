@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 public class ListIteratorImpl<E> implements ListIterator<E> {
 	private E[] internal;
 	private int cursorPosition;
+	private boolean nextCommutator;
+	private boolean previousCommutator;
 
 	public ListIteratorImpl(E[] internal) {
 		super();
@@ -22,6 +24,8 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		if (internal.length == 0 || internal.length == cursorPosition) {
 			throw new NoSuchElementException();
 		}
+		previousCommutator = false;
+		nextCommutator = true;
 		return internal[cursorPosition++];
 	}
 
@@ -35,6 +39,8 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		if (internal.length == 0 || cursorPosition == 0) {
 			throw new NoSuchElementException();
 		}
+		nextCommutator = false;
+		previousCommutator = true;
 		return internal[--cursorPosition];
 	}
 
@@ -50,13 +56,19 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
-
+		if (nextCommutator) {
+			internal[cursorPosition - 1] = null;
+			nextCommutator = false;
+		} else if (previousCommutator) {
+			internal[cursorPosition] = null;
+			previousCommutator = false;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
 	public void set(E e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -81,6 +93,8 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 				local[i] = internal[i];
 			}
 		}
+		nextCommutator = false;
+		previousCommutator = false;
 		cursorPosition++;
 		internal = (E[]) local;
 	}
