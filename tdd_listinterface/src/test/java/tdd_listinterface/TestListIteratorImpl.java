@@ -112,4 +112,20 @@ public class TestListIteratorImpl {
 		assertEquals(1, listIterator.nextIndex());
 	}
 	
+	// previousIndex()
+	@Test
+	public void shouldReturnTrueWhenListiteratorCursorHasStartPosition() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		assertEquals(-1, listIterator.previousIndex());
+	}
+	
+	@Test
+	public void shouldreturnTrueWhenReturnedPreviousIndexIsCorrect() {
+		Object[] objects = {98, 99};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		assertEquals(1, listIterator.previousIndex());
+	}
+	
 }
