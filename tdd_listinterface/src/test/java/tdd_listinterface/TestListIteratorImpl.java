@@ -128,6 +128,53 @@ public class TestListIteratorImpl {
 		assertEquals(1, listIterator.previousIndex());
 	}
 	
+	// remove()
+	@Test
+	public void shouldReturnTrueWhenFirstElementRemovedByNextCall() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.remove();
+		assertEquals(null, listIterator.previous());
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenFirstElementRemovedByPreviousCall() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.previous();
+		listIterator.remove();
+		assertEquals(null, listIterator.next());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldReturnIllegalArgumentExceptionWhenMethodsNextOrPreviousAreNotCalled() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.remove();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldReturnIllegalArgumentExceptionWhenAfterMethodNextAreMethodAddCalled() {
+		Object[] objects = {1, 2};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.next();
+		listIterator.previous();
+		listIterator.add(3);
+		listIterator.remove();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldReturnIllegalArgumentExceptionWhenAfterMethodPreviousAreMethodAddCalled() {
+		Object[] objects = {1, 2};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.add(3);
+		listIterator.remove();
+	}
+	
 	// add()
 	@Test
 	public void shouldReturnTrueWhenReturnedElementIsEqualsToTheAddedElement() {
