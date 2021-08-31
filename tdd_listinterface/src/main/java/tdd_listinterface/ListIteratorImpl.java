@@ -14,7 +14,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public boolean hasNext() {
-		return internal.length != 0 && internal.length != cursorPosition ? true : false;
+		return internal.length != 0 && internal.length > cursorPosition ? true : false;
 	}
 
 	@Override
@@ -63,23 +63,23 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E e) {
-		if(internal.length != 0 && e != null) {
+		if (internal.length != 0 && e != null) {
 			E what = internal[0];
-			if(what.getClass() != e.getClass()) {
+			if (what.getClass() != e.getClass()) {
 				throw new ClassCastException();
 			}
 		}
 		Object[] objects = new Object[internal.length + 1];
-		for(int i = 0; i < objects.length; i++) {
-			if(i == cursorPosition) {
+		for (int i = 0; i < objects.length; i++) {
+			if (i == cursorPosition) {
 				objects[i] = e;
 				continue;
-			}
-			if(i > cursorPosition) {
+			} else if (i > cursorPosition) {
 				objects[i] = internal[i - 1];
 				continue;
+			} else {
+				objects[i] = internal[i];
 			}
-			objects[i] = internal[i];
 		}
 		cursorPosition++;
 		internal = (E[]) objects;
