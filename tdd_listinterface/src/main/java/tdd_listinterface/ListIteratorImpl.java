@@ -20,7 +20,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public E next() {
-		if(internal.length == 0 || internal.length == cursorPosition) {
+		if (internal.length == 0 || internal.length == cursorPosition) {
 			throw new NoSuchElementException();
 		}
 		return (E) internal[cursorPosition++];
@@ -34,7 +34,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public E previous() {
-		if(internal.length == 0 || cursorPosition == 0) {
+		if (internal.length == 0 || cursorPosition == 0) {
 			throw new NoSuchElementException();
 		}
 		return (E) internal[--cursorPosition];
@@ -42,7 +42,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public int nextIndex() {
-		if(cursorPosition == internal.length) {
+		if (cursorPosition == internal.length) {
 			return internal.length;
 		}
 		return cursorPosition;
@@ -50,25 +50,27 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public int previousIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		if (cursorPosition == 0) {
+			return -1;
+		}
+		return cursorPosition;
 	}
 
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void set(E e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void add(E e) {
-		
+
 	}
 
 }
