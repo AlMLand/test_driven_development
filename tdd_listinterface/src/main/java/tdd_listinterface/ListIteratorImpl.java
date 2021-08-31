@@ -96,8 +96,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	private void validationType(E e) {
 		if (internal.length != 0 && e != null) {
-			E internalElement = internal[0];
-			if (internalElement.getClass() != e.getClass()) {
+			if (internal.getClass().getComponentType() != e.getClass()) {
 				throw new ClassCastException();
 			}
 		}
