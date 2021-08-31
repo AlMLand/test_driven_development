@@ -69,7 +69,12 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public void set(E e) {
-
+		if(internal.length != 0 && e != null) {
+			E internalElement = internal[0];
+			if(internalElement.getClass() != e.getClass()) {
+				throw new ClassCastException();
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
