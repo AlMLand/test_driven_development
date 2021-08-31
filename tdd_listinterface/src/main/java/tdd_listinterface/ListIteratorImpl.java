@@ -50,10 +50,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public int previousIndex() {
-		if (cursorPosition == 0) {
-			return -1;
-		}
-		return cursorPosition;
+		return cursorPosition == 0 ? -1 : cursorPosition;
 	}
 
 	@Override
