@@ -128,4 +128,38 @@ public class TestListIteratorImpl {
 		assertEquals(1, listIterator.previousIndex());
 	}
 	
+	// add()
+	@Test
+	public void shouldReturnTrueWhenReturnedElementIsEqualsToTheAddedElement() {
+		Object[] objects = {};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.add(Integer.valueOf(1));
+		assertEquals(Integer.valueOf(1), listIterator.previous());
+	}
+	
+	@Test(expected = ClassCastException.class)
+	public void shouldReturnClassCastExceptionWhenAddedElementTypeIsNotCompatibel() {
+		Object[] integers = {1};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(integers);
+		listIterator.add("a");
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenPreviousElementIsEqualsWithNewAddedElement() {
+		Object[] objects = {1, 2};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.add(3);
+		assertEquals(3, listIterator.previous());
+	}
+	
+	@Test
+	public void shouldReturnTrueWhenElementOfPosition3IsExist() {
+		Object[] objects = {1, 2};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.add(3);
+		assertEquals(2, listIterator.next());
+	}
+	
 }
