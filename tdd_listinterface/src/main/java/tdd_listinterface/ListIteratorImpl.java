@@ -69,23 +69,13 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public void set(E e) {
-		if(internal.length != 0 && e != null) {
-			E internalElement = internal[0];
-			if(internalElement.getClass() != e.getClass()) {
-				throw new ClassCastException();
-			}
-		}
+		validationType(e);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E e) {
-		if (internal.length != 0 && e != null) {
-			E internalElement = internal[0];
-			if (internalElement.getClass() != e.getClass()) {
-				throw new ClassCastException();
-			}
-		}
+		validationType(e);
 		Object[] local = new Object[internal.length + 1];
 		for (int i = 0; i < local.length; i++) {
 			if (i == cursorPosition) {
@@ -102,6 +92,15 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		previousCommutator = false;
 		cursorPosition++;
 		internal = (E[]) local;
+	}
+
+	private void validationType(E e) {
+		if (internal.length != 0 && e != null) {
+			E internalElement = internal[0];
+			if (internalElement.getClass() != e.getClass()) {
+				throw new ClassCastException();
+			}
+		}
 	}
 
 }
