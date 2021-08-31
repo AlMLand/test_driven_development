@@ -93,5 +93,23 @@ public class TestListIteratorImpl {
 		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
 		assertEquals(listIterator.next(), listIterator.previous());
 	}
+	
+	// nextIndex()
+	@Test
+	public void shouldReturnTrueWhenCursorValueIsEqualsArrayLenght() {
+		Object[] objects = {1, 2};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.next();
+		assertEquals(objects.length, listIterator.nextIndex());
+	}
 
+	@Test
+	public void shouldReturnTrueWhenIndexForNextElementIsCorrect() {
+		Object[] objects = {98, 99};
+		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		assertEquals(1, listIterator.nextIndex());
+	}
+	
 }
