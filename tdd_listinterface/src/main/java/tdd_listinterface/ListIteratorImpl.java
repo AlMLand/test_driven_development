@@ -4,10 +4,10 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class ListIteratorImpl<E> implements ListIterator<E> {
-	private Object[] internal;
+	private E[] internal;
 	private int cursorPosition;
 
-	public ListIteratorImpl(Object[] internal) {
+	public ListIteratorImpl(E[] internal) {
 		super();
 		this.internal = internal;
 	}
@@ -17,13 +17,12 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		return internal.length != 0 && internal.length != cursorPosition ? true : false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E next() {
 		if (internal.length == 0 || internal.length == cursorPosition) {
 			throw new NoSuchElementException();
 		}
-		return (E) internal[cursorPosition++];
+		return internal[cursorPosition++];
 	}
 
 	@Override
@@ -31,13 +30,12 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		return internal.length != 0 && cursorPosition != internal.length && cursorPosition != 0 ? true : false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E previous() {
 		if (internal.length == 0 || cursorPosition == 0) {
 			throw new NoSuchElementException();
 		}
-		return (E) internal[--cursorPosition];
+		return internal[--cursorPosition];
 	}
 
 	@Override
@@ -62,9 +60,29 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E e) {
-
+		if(internal.length != 0 && e != null) {
+			E what = internal[0];
+			if(what.getClass() != e.getClass()) {
+				throw new ClassCastException();
+			}
+		}
+		Object[] objects = new Object[internal.length + 1];
+		for(int i = 0; i < objects.length; i++) {
+			if(i == cursorPosition) {
+				objects[i] = e;
+				continue;
+			}
+			if(i > cursorPosition) {
+				objects[i] = internal[i - 1];
+				continue;
+			}
+			objects[i] = internal[i];
+		}
+		cursorPosition++;
+		internal = (E[]) objects;
 	}
 
 }
