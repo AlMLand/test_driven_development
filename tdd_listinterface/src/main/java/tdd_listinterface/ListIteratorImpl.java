@@ -42,10 +42,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public int nextIndex() {
-		if (cursorPosition == internal.length) {
-			return internal.length;
-		}
-		return cursorPosition;
+		return cursorPosition == internal.length ? internal.length : cursorPosition;
 	}
 
 	@Override
