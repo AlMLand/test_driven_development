@@ -175,6 +175,14 @@ public class TestListIteratorImpl {
 		listIterator.remove();
 	}
 	
+	// set()
+	@Test(expected = ClassCastException.class)
+	public void shouldReturnClassCastExceptionWhenSetedElementTypeIsNotCompatibel() {
+		Object[] objects = {1};
+		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.set("a");
+	}
+	
 	// add()
 	@Test
 	public void shouldReturnTrueWhenReturnedElementIsEqualsToTheAddedElement() {
