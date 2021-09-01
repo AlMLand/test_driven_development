@@ -4,7 +4,7 @@ import java.util.*;
 
 public class IteratorImpl<E> implements Iterator<E> {
 	private E[] internal;
-	private int indexOfElement;
+	private int cursorPosition;
 
 	public IteratorImpl(E[] internal) {
 		super();
@@ -13,15 +13,15 @@ public class IteratorImpl<E> implements Iterator<E> {
 
 	@Override
 	public boolean hasNext() {
-		return internal.length != 0 || internal.length != indexOfElement ? true : false;
+		return internal.length != 0 || internal.length != cursorPosition ? true : false;
 	}
 
 	@Override
 	public E next() {
-		if (internal.length == 0 || internal.length == indexOfElement) {
+		if (internal.length == 0 || internal.length == cursorPosition) {
 			throw new NoSuchElementException();
 		}
-		return internal[indexOfElement++];
+		return internal[cursorPosition++];
 	}
 
 }
