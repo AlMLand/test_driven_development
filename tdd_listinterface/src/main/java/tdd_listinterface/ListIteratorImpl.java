@@ -32,7 +32,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public boolean hasPrevious() {
-		return internal.length != 0 && cursorPosition != internal.length && cursorPosition != 0 ? true : false;
+		return internal.length != 0 && internal.length >= cursorPosition && cursorPosition != 0 ? true : false;
 	}
 
 	@Override
