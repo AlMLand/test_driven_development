@@ -220,8 +220,8 @@ public class TestListIteratorImpl {
 	// add()
 	@Test
 	public void shouldReturnTrueWhenReturnedElementIsEqualsToTheAddedElement() {
-		Object[] objects = {};
-		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
+		Integer[] integers = {};
+		ListIterator<Integer> listIterator = new ListIteratorImpl<>(integers);
 		listIterator.add(Integer.valueOf(1));
 		assertEquals(Integer.valueOf(1), listIterator.previous());
 	}
