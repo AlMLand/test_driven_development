@@ -1,8 +1,7 @@
 package tdd_listinterface;
 
 import java.lang.reflect.Array;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class ListIteratorImpl<E> implements ListIterator<E> {
 	private E[] internal;
