@@ -37,7 +37,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public E previous() {
-		if (internal.length == 0 || cursorPosition == 0) {
+		if (internal.length == 0 || internal.length < cursorPosition || cursorPosition == 0) {
 			throw new NoSuchElementException();
 		}
 		nextCommutator = false;
