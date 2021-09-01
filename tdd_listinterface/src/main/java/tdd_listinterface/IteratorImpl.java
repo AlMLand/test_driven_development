@@ -1,29 +1,27 @@
 package tdd_listinterface;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class IteratorImpl<E> implements Iterator<E> {
-	private Object[] objects;
+	private E[] internal;
 	private int indexOfElement;
 
-	public IteratorImpl(Object[] objects) {
+	public IteratorImpl(E[] internal) {
 		super();
-		this.objects = objects;
+		this.internal = internal;
 	}
 
 	@Override
 	public boolean hasNext() {
-		return objects.length != 0 || objects.length != indexOfElement ? true : false;
+		return internal.length != 0 || internal.length != indexOfElement ? true : false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E next() {
-		if (objects.length == 0 || objects.length == indexOfElement) {
+		if (internal.length == 0 || internal.length == indexOfElement) {
 			throw new NoSuchElementException();
 		}
-		return (E) objects[indexOfElement++];
+		return internal[indexOfElement++];
 	}
 
 }
