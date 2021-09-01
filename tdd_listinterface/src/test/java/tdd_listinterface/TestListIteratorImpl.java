@@ -148,15 +148,15 @@ public class TestListIteratorImpl {
 		assertEquals(null, listIterator.next());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void shouldReturnIllegalArgumentExceptionWhenMethodsNextOrPreviousAreNotCalled() {
+	@Test(expected = IllegalStateException.class)
+	public void shouldReturnIllegalStateExceptionWhenMethodsNextOrPreviousAreNotCalledBeforRemoveMethod() {
 		Object[] objects = { 1, 2 };
 		ListIterator<?> listIterator = new ListIteratorImpl<>(objects);
 		listIterator.remove();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void shouldReturnIllegalArgumentExceptionWhenAfterMethodNextAreMethodAddCalled() {
+	@Test(expected = IllegalStateException.class)
+	public void shouldReturnIllegalStateExceptionWhenAfterMethodNextAreMethodAddCalledAndNotMethodRemove() {
 		Integer[] integers = { 1, 2 };
 		ListIterator<Integer> listIterator = new ListIteratorImpl<>(integers);
 		listIterator.next();
@@ -166,8 +166,8 @@ public class TestListIteratorImpl {
 		listIterator.remove();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void shouldReturnIllegalArgumentExceptionWhenAfterMethodPreviousAreMethodAddCalled() {
+	@Test(expected = IllegalStateException.class)
+	public void shouldReturnIllegalStateExceptionWhenAfterMethodPreviousAreMethodAddCalled() {
 		Integer[] integers = { 1, 2 };
 		ListIterator<Integer> listIterator = new ListIteratorImpl<>(integers);
 		listIterator.next();
@@ -181,6 +181,40 @@ public class TestListIteratorImpl {
 		Object[] objects = { 1 };
 		ListIterator<Object> listIterator = new ListIteratorImpl<>(objects);
 		listIterator.set("a");
+	}
+
+	@Test
+	public void shouldReturnTrueWhenElementIsSeted() {
+		Integer[] objects = { 1 };
+		ListIterator<Integer> listIterator = new ListIteratorImpl<>(objects);
+		listIterator.next();
+		listIterator.set(2);
+		assertEquals(Integer.valueOf(2), listIterator.previous());
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void shouldReturnIllegalStateExceptionWhenMethodsNextOrPreviousAreNotCalledBeforSetMethod() {
+		Integer[] integers = { 1, 2 };
+		ListIterator<Integer> listIterator = new ListIteratorImpl<>(integers);
+		listIterator.set(3);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void shouldReturnIllegalStateExceptionWhenRemoveCalledAfterNextAndBeforeSet() {
+		Integer[] integers = { 1, 2 };
+		ListIterator<Integer> listIterator = new ListIteratorImpl<>(integers);
+		listIterator.next();
+		listIterator.remove();
+		listIterator.set(3);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void shouldReturnIllegalStateExceptionWhenAddCalledAfterNextAndBeforeSet() {
+		Integer[] integers = { 1, 2 };
+		ListIterator<Integer> listIterator = new ListIteratorImpl<>(integers);
+		listIterator.next();
+		listIterator.add(3);
+		listIterator.set(4);
 	}
 
 	// add()
