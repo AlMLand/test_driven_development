@@ -57,20 +57,16 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 
 	@Override
 	public void remove() {
-		if (nextCommutator) {
-			internal[cursorPosition - 1] = null;
-			nextCommutator = false;
-		} else if (previousCommutator) {
-			internal[cursorPosition] = null;
-			previousCommutator = false;
-		} else {
-			throw new IllegalStateException();
-		}
+		modificationInternal(null);
 	}
 
 	@Override
 	public void set(E e) {
 		validationType(e);
+		modificationInternal(e);
+	}
+
+	private void modificationInternal(E e) {
 		if (nextCommutator) {
 			internal[cursorPosition - 1] = e;
 			nextCommutator = false;
