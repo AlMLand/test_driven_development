@@ -1,5 +1,6 @@
 package tdd_listinterface;
 
+import java.lang.reflect.Array;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -63,20 +64,30 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 			internal[cursorPosition] = null;
 			previousCommutator = false;
 		} else {
-			throw new IllegalArgumentException();
+			throw new IllegalStateException();
 		}
 	}
 
 	@Override
 	public void set(E e) {
 		validationType(e);
+		if (nextCommutator) {
+			internal[cursorPosition - 1] = e;
+			nextCommutator = false;
+		} else if (previousCommutator) {
+			internal[cursorPosition] = e;
+			previousCommutator = false;
+		} else {
+			throw new IllegalStateException();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E e) {
 		validationType(e);
-		Object[] local = new Object[internal.length + 1];
+		Class<?> internalType = internal.getClass();
+		E[] local = (E[]) Array.newInstance(internalType.getComponentType(), internal.length + 1);
 		for (int i = 0; i < local.length; i++) {
 			if (i == cursorPosition) {
 				local[i] = e;
@@ -91,7 +102,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		nextCommutator = false;
 		previousCommutator = false;
 		cursorPosition++;
-		internal = (E[]) local;
+		internal = local;
 	}
 
 	private void validationType(E e) {
