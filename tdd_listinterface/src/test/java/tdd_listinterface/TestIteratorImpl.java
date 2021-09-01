@@ -2,8 +2,7 @@ package tdd_listinterface;
 
 import static org.junit.Assert.*;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import org.junit.Test;
 
