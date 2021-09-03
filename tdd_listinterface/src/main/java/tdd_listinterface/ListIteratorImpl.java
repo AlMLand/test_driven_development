@@ -77,10 +77,17 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E e) {
 		validationType(e);
+		internal = initializingWithNewElement(e);
+		nextCommutator = false;
+		previousCommutator = false;
+		cursorPosition++;
+	}
+
+	@SuppressWarnings("unchecked")
+	private E[] initializingWithNewElement(E e) {
 		Class<?> internalType = internal.getClass();
 		E[] local = (E[]) Array.newInstance(internalType.getComponentType(), internal.length + 1);
 		for (int i = 0; i < local.length; i++) {
@@ -94,10 +101,7 @@ public class ListIteratorImpl<E> implements ListIterator<E> {
 				local[i] = internal[i];
 			}
 		}
-		nextCommutator = false;
-		previousCommutator = false;
-		cursorPosition++;
-		internal = local;
+		return local;
 	}
 
 	private void validationType(E e) {
